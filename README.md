@@ -35,7 +35,7 @@ az aks get-credentials --resource-group <resource_group_name> --name <cluster_na
 ```
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.15.3 --set crd.enabled=true
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.15.3 --set crds.enabled=true
 ```
 
 Cert-Manager is a Kubernetes add-on that automates the management and issuance of TLS (Transport Layer Security) certificates.
