@@ -5,11 +5,10 @@ defaultScaleDownDelay: 5m
 enableLeaderElection: true
 
 image:
-  repository: "summerwind/actions-runner"
+  repository: "summerwind/actions-runner-controller"
   actionsRunnerRepositoryAndTag: "summerwind/actions-runner:ubuntu-22.04"
   dindSidecarRepositoryAndTag: "docker:dind"
   pullPolicy: IfNotPresent
-
 serviceAccount:
   create: true
 
