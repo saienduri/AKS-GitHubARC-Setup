@@ -68,7 +68,7 @@ Then, use the following command to install the github ARC
 ```
 helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
 helm repo update
-helm upgrade --install --namespace actions-runner-system --create-namespace --set=authSecret.create=true --set=authSecret.github_token="<your_token>"  --wait actions-runner-controller actions-runner-controller/actions-runner-controller -f runner-controller.yaml
+helm upgrade --install --namespace actions-runner-system --set=authSecret.create=true --set=authSecret.github_token="<your_token>"  --wait actions-runner-controller actions-runner-controller/actions-runner-controller -f runner-controller.yaml
 ```
 
 The yaml file used above configures the actions runner controller service and the webhook server. I've added the yaml file I used (`runner-controller.yaml`) to this repo.
