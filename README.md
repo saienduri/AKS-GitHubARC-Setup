@@ -102,6 +102,11 @@ clusterIP: 10.0.11.74
 ```
 TODO(saienduri): Find a way to just configure it with a load balancer initially (just webhook server, not the service)
 
+Then, to actually update the service to use the updated config:
+```
+kubectl apply -f current-config.yaml
+```
+
 Now that the server and webhook secret have been configured, you can go to the github org/repo to set up the github side of things.
 Go to "Settings" -> "Webhooks".
 Create a new webhook with address `http://<external-ip>/webhooks` and the content type as `application/json`.
