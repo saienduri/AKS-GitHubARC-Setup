@@ -13,7 +13,8 @@ The userpool is where our github actions jobs will be dispatched. The default VM
 Delete the userpool and create a new pool. For Node Size, select `Standard F48s v2`. Also, make sure to select the `Autoscale` option.
 I went with this VM because out of all the 48 core ones, it is the only one that is optimized for compute (performance), lacking in memory/storage (which we don't need), and costs $1.67/hr.
 
-<img width="863" alt="image" src="https://github.com/user-attachments/assets/30952f5e-15d4-4b37-a51e-0a2c887637b2">
+<img width="853" alt="image" src="https://github.com/user-attachments/assets/08076afe-772c-4702-a3e2-39066494b2b9">
+
 
 For the rest of the cluster creation options you can choose the default.
 
@@ -80,7 +81,8 @@ I've set this up to use webhooks to drive the overall scaling of our cluster.
 This scaling is performed based on the number of webhook events received from GitHub.
 Here's an image on how that overall process works:
 
-![image](https://github.com/user-attachments/assets/7befbafd-5316-4712-85a2-eb88d5c5d4fb)
+![image](https://github.com/user-attachments/assets/b11266c5-0c80-4a34-aa18-19a4da255965)
+
 
 To configure this, first we need to expose the github-webhook server created above to the public, so it can receive from GitHub API.
 To do this, get the current configuration if the server using this command:
