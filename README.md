@@ -16,6 +16,7 @@ I went with this VM because out of all the 48 core ones, it is the only one that
 <img width="853" alt="image" src="https://github.com/user-attachments/assets/08076afe-772c-4702-a3e2-39066494b2b9">
 
 
+
 For the rest of the cluster creation options you can choose the default.
 
 # Step 2: Login to your Cluster
