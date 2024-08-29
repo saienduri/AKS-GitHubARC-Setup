@@ -115,7 +115,8 @@ For events, you can pick "Let me select individual events" and then choose push,
 If you don't know the external IP of the webhook server you can run:
 `kubectl get svc -n actions-runner-system`
 
-<img width="588" alt="image" src="https://github.com/user-attachments/assets/df7dd22d-29de-493a-b3ca-68ff8b904501">
+<img width="566" alt="image" src="https://github.com/user-attachments/assets/76e5d247-c5dd-4aef-aba1-374b789ce7f8">
+
 
 # Step 7: Deploy the Runners
 
