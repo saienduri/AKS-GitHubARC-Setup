@@ -118,7 +118,7 @@ If you don't know the external IP of the webhook server you can run:
 <img width="566" alt="image" src="https://github.com/user-attachments/assets/76e5d247-c5dd-4aef-aba1-374b789ce7f8">
 
 
-# Step 7: Deploy the Runners
+# Step 6: Deploy the Runners
 
 Here, we deploy the runners.
 Specifically, we tell the actions runner controller how much resources we need (45 cores, 50 GB).
@@ -127,7 +127,7 @@ You can use the yaml in this repo (runner-deployment.yaml) in the following comm
 
 `kubectl apply -f runner-deployment.yaml`
 
-# Step 8: Configure HRA
+# Step 7: Configure HRA
 
 This is to configure GitHub Actions Runner Controller's HorizontalRunnerAutoscaler (HRA).
 With the GitHub Actions Runner Controller in a Kubernetes cluster, each runner corresponds to a single container within a pod, and each pod only runs one runner.
