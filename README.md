@@ -2,7 +2,7 @@
 
 Documentation for bringing up an Azure Kubernetes cluster integrated with GitHub Actions Runner Controller for IREE Project
 
-# Step 1: Create Azure Kubernetes Service
+## Step 1: Create Azure Kubernetes Service
 
 Search for Kubernetes Service in the top search bar in Azure Portal. Once in, now click on Create -> Kubernetes Cluster. 
 Choose your resource group and cluster name and proceed with default options for Basics.
@@ -19,7 +19,7 @@ I went with this VM because out of all the 48 core ones, it is the only one that
 
 For the rest of the cluster creation options you can choose the default.
 
-# Step 2: Login to your Cluster
+## Step 2: Login to your Cluster
 
 Now, to configure the cluster and all the services you need to connect to the cluster.
 You can do this in your own local dev environment (just make sure you have kube, helm, and azure cli installed)
@@ -30,7 +30,27 @@ az account set --subscription <your_subscription_number>
 az aks get-credentials --resource-group <resource_group_name> --name <cluster_name> --overwrite-existing
 ```
 
-# Step 3: Install Cert Manager
+# Latest GHA Runner Scale Set Instructions
+
+# Step 3: Install GHA Scale Set controller and listener
+
+```
+helm upgrade --install "azure-linux-scale"     --namespace "arc-runners"     --create-namespace     --set githubConfigUrl="https://github.com/iree-org"     --set githubConfigSecret.github_token="<your_PAT_token>"     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set -f values.yaml
+```
+
+Please use the values.yaml file from latest-config-files folder in this repo for the above command.
+The "azure-linux-scale" is the installation name and becomes the label you use for "runs-on:", so configure it however you see fit.
+
+The values.yaml uses a custom docker image that is currently hosted in this repo: https://github.com/saienduri/docker-images/tree/main.
+It also has CI configured to build and publish the image.
+We need a custom image that builds off the gha scale set runner docker image provided, so that it has the deps that we require for CI and works on all our workflows.
+Other things we configure in the values.yaml file is min runners = 3 and max runners = 30 for scaling.
+The scaling setup is basically the same as the legacy documentation below, so please refer to that for further details.
+Also, docker in docker is setup, so in our github workflows we can specify images to use if we want (iree uses cpubuilder_ubuntu_jammy image for example), but as done in iree-turbine, we can just run workflows using the preconfigured custom image here without further setup and that works too.
+
+# Legacy ARC Instructions (still works)
+
+## Step 3: Install Cert Manager
 
 ```
 helm repo add jetstack https://charts.jetstack.io
@@ -41,7 +61,7 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --creat
 Cert-Manager is a Kubernetes add-on that automates the management and issuance of TLS (Transport Layer Security) certificates.
 This is used for security reasons.
 
-# Step 4: Install Github ARC and Authenticate
+## Step 4: Install Github ARC and Authenticate
 
 I do this using a personal token. So, if you don't have one, create a github token with these permissions:
 
@@ -76,7 +96,7 @@ Here we tell it to configure a bunch of things for the runner controller, and we
 I've set it up to use `summerwind/actions-runner:ubuntu-22.04` which is the latest one provided by the github actions controller with dind enabled.
 This works fine for us and passes all iree-turbine jobs (with no docker) and the iree jobs (these use multiple docker images and work through dind)
 
-# Step 5: Configure GitHub Webhooks
+## Step 5: Configure GitHub Webhooks
 
 I've set this up to use webhooks to drive the overall scaling of our cluster.
 This scaling is performed based on the number of webhook events received from GitHub.
@@ -118,7 +138,7 @@ If you don't know the external IP of the webhook server you can run:
 <img width="566" alt="image" src="https://github.com/user-attachments/assets/76e5d247-c5dd-4aef-aba1-374b789ce7f8">
 
 
-# Step 6: Deploy the Runners
+## Step 6: Deploy the Runners
 
 Here, we deploy the runners.
 Specifically, we tell the actions runner controller how much resources we need (45 cores, 50 GB).
@@ -127,7 +147,7 @@ You can use the yaml in this repo (runner-deployment.yaml) in the following comm
 
 `kubectl apply -f runner-deployment.yaml`
 
-# Step 7: Configure HRA
+## Step 7: Configure HRA
 
 This is to configure GitHub Actions Runner Controller's HorizontalRunnerAutoscaler (HRA).
 With the GitHub Actions Runner Controller in a Kubernetes cluster, each runner corresponds to a single container within a pod, and each pod only runs one runner.
