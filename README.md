@@ -32,7 +32,13 @@ az aks get-credentials --resource-group <resource_group_name> --name <cluster_na
 
 # Latest GHA Runner Scale Set Instructions
 
-### Step 3: Install Controller and Listener + Deploy Runners
+### Step 3: Install Actions Runner Controller
+
+```
+helm install arc --namespace "arc" --create-namespace oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
+```
+
+### Step 4: Configure and Deploy Runner Scale Set
 
 ```
 helm upgrade --install "azure-linux-scale"     --namespace "arc-runners"     --create-namespace     --set githubConfigUrl="https://github.com/iree-org"     --set githubConfigSecret.github_token="<your_PAT_token>"     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set -f values.yaml
