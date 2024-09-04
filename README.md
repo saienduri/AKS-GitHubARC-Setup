@@ -48,7 +48,7 @@ Other things we configure in the values.yaml file is min runners = 3 and max run
 The scaling setup is basically the same as the legacy documentation below, so please refer to that for further details.
 Also, docker in docker is setup, so in our github workflows we can specify images to use if we want (iree uses cpubuilder_ubuntu_jammy image for example), but as done in iree-turbine, we can just run workflows using the preconfigured custom image here without further setup and that works too.
 
-Now, change your workflows appropriately to match the label set with the installation name above and enjoy the AKS + ARC magic :)
+And you're done (just make sure label matches installation name in workflow) :)
 
 # Legacy ARC Instructions (still works)
 
