@@ -32,6 +32,9 @@ az aks get-credentials --resource-group <resource_group_name> --name <cluster_na
 
 # Latest GHA Runner Scale Set Instructions
 
+![image](https://github.com/user-attachments/assets/e27a47e0-cdf6-4449-880e-b876a98f2bdf)
+
+
 ### Step 3: Install Actions Runner Controller
 
 ```
