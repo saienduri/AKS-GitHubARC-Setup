@@ -21,6 +21,12 @@ apply a taint, so that the cluster knows to assing workflows to the windows node
 kubectl taint nodes aksusrpl000000 'kubernetes.io/os=windows:NoSchedule'
 ```
 
+if you follwed the instructions and used the same variable names, the windows node should be named `aksusrpl000000`, otherwise you can find it with:
+
+```
+kubectl get nodes -A
+```
+
 ### Optional Alternative
 
 You can also complete steps 1 and 3 after connecting to your cluster using the following command
@@ -48,11 +54,13 @@ kubectl apply -f windows-config-files/pvc-disk.yaml
 
 ## Step 6
 
-Install the controll set
+Install the control set
 
 ```
 helm install "arc-runner-set" -f windows-config-files/values.yaml --namespace "arc-runners" --create-namespace oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
 ```
+
+Using a docker image that can be found here https://github.com/eliasj42/arc-windows-runner/pkgs/container/arc-windows-runner
 
 ## Possible error
 
