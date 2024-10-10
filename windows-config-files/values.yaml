@@ -1,0 +1,40 @@
+controllerServiceAccount:
+  name: arc-gha-rs-controller
+  namespace: arc-systems
+template:
+  spec:
+    containers:
+      - name: runner
+        image: ghcr.io/eliasj42/arc-windows-runner:latest
+        command: ["cmd.exe", "/c", "\\home\\runner\\run.cmd"]
+        resources:
+          requests:
+            memory: 50000Mi
+            ephemeral-storage: 50Gi
+          limits:
+            memory: 60000Mi
+            ephemeral-storage: 60Gi
+        volumeMounts:
+          - name: azure-disk
+            mountPath: /mnt/azure  # Mount the Azure Disk to this path inside the container
+    volumes:
+      - name: azure-disk
+        persistentVolumeClaim:
+          claimName: azure-disk-pvc  # Reference the PVC created below
+    tolerations:
+      - key: kubernetes.io/os
+        operator: Equal
+        value: windows
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - windows
+githubConfigUrl: https://github.com/iree-org/iree
+githubConfigSecret: 
+  github_token: <Github Token Here>
