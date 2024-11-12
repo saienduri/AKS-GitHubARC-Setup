@@ -10,7 +10,7 @@ template:
     initContainers:
       - name: init-dind-externals
         image: ghcr.io/saienduri/ghascale:main
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command:
           ["cp", "-r", "/home/runner/externals/.", "/home/runner/tmpDir/"]
         volumeMounts:
@@ -19,7 +19,7 @@ template:
     containers:
       - name: runner
         image: ghcr.io/saienduri/ghascale:main
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["/home/runner/run.sh"]
         resources:
           requests:
