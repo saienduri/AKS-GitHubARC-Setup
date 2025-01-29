@@ -44,7 +44,7 @@ helm install arc --namespace "arc" --create-namespace oci://ghcr.io/actions/acti
 ### Step 4: Configure and Deploy Runner Scale Set
 
 ```
-helm upgrade --install "azure-linux-scale"     --namespace "arc-runners"     --create-namespace     --set githubConfigUrl="https://github.com/iree-org"     --set githubConfigSecret.github_token="<your_PAT_token>"     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set -f values.yaml
+helm upgrade --install "azure-linux-scale"     --namespace "<namespace_name_for_runners>"     --create-namespace     --set githubConfigUrl="<link_to_your_github_repo_or_org>"     --set githubConfigSecret.github_token="<your_PAT_token>"     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set -f values.yaml
 ```
 
 Please use the values.yaml file from `latest-config-files` folder in this repo for the above command.
