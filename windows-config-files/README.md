@@ -69,3 +69,19 @@ If running step 5 gives an error about namespaces, do step 6, then step 5, then 
 ```
 helm upgrade --install "arc-runner-set" -f windows-config-files/values.yaml --namespace "arc-runners" --create-namespace oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
 ```
+
+## how to debug failure to pull controller image
+
+If the the controller is failing to pull the image, it is most likely because the windows node was renamed and the taint is no longer applied
+
+to fix, first check what the name of the windows node is
+
+```
+kubectl get nodes -A
+```
+
+Then reapply the taint
+
+```
+kubectl taint nodes <new aksusrpl name> 'kubernetes.io/os=windows:NoSchedule'
+```
